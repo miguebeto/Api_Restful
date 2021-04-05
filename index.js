@@ -26,7 +26,7 @@ app.get('/api/:product', (req,res)=>{
 
 app.post('/api/product', (req,res)=>{
 console.log(req.body);
-res.status(200).send({massage: 'El producto se ha recibido'});
+res.status(404).send({massage: 'El producto no existe'});
 });
 
 app.put('/api/product', (req,res)=>{
