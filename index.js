@@ -9,6 +9,7 @@ http.createServer(function(req, res){
 const { text } = require('express');
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require ('mongoose')
 
 const app = express();
 const port = process.env.port || 3001
@@ -37,8 +38,17 @@ app.delete('/api/product', (req,res)=>{
 
 });
 
-app.listen(port, ()=>{
-    console.log(`Api rest corriendo en http://localhost:${port}`);
+mongoose.connect('mongodb://localhost:27017/shop', (err, res)=>{
+    if (err){
+        return console.log(`Error al conectar a la base de datos: ${err}`);
+    };
+    console.log('conexion a la base de datos establecida...');
+
+    app.listen(port, ()=>{
+        console.log(`Api rest corriendo en http://localhost:${port}`);
+    });
+    
 });
+
 
 
