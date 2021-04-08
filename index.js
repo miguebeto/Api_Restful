@@ -53,12 +53,19 @@ product.save((err, productStored) => {if (err) res.status(500).send({message: `E
     })
 })
 
-app.put('/api/product', (req,res)=>{
+app.put('/api/product/:productId', (req,res)=>{
+    let productId = req.params.productId
+    let update = req.body
 
+    Product.findByIdAndUpdate(productId, update, (err, productUpdated)=>{
+        if (err) res.status(500).send({ message:  `Error al borrar el producto: ${err}`})
+
+        res.status(200).send({ product: productUpdated })
+    })
 });
 
 app.delete('/api/product/:productId', (req,res)=>{
-let productId = req.params.productId
+    let productId = req.params.productId
 
     Product.findById(productId, (err, product)=>{
             if (err) res.status(500).send({message: `Error al borrar el producto: ${err}`})
