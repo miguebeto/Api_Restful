@@ -19,7 +19,12 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 app.get('/api/product', (req,res)=>{
-res.send(200, {products: []});
+    Product.find({}, (err, products)=>{
+        if (err) return res.status(500).send({message: `Error al realizar la peticion: ${err}`})
+        if (!products) return res.status(404).send({message: `No existe el producto`})    
+    
+        res.send(200, {products})
+    })
 });
 
 app.get('/api/product/:productId', (req,res)=>{
